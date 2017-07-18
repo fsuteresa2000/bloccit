@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
 
   resources :posts
-  
+
   get 'about' => 'welcome#about'
 
-  root to: "controller#action"
+  root to: "welcome#index"
 
 
 end

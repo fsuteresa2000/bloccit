@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
-
-  # #12
    let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
- # #13
    let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
 
   describe "GET show" do

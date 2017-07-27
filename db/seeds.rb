@@ -48,6 +48,13 @@ require 'random_data'
    role:     'admin'
  )
 
+ # Create a moderator
+ moderator = User.create!(
+   name:     'Moderator User',
+   email:    'Moderator@example.com',
+   password: 'helloworld',
+   role:     'moderator'
+ )
  # Create a member
  member = User.create!(
    name:     'Member User',

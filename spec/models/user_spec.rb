@@ -6,6 +6,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_many(:posts) }
   it { is_expected.to have_many(:comments) }
   it { is_expected.to have_many(:votes) }
+  it { is_expected.to have_many(:favorites) }
 
    # Shoulda tests for name
    it { is_expected.to validate_presence_of(:name) }
@@ -26,29 +27,26 @@ RSpec.describe User, type: :model do
      it "should have name and email attributes" do
        expect(user).to have_attributes(name: "Bloccit User", email: "user@bloccit.com")
      end
-     # #1
+
     it "responds to role" do
       expect(user).to respond_to(:role)
     end
 
-# #2
     it "responds to admin?" do
       expect(user).to respond_to(:admin?)
     end
 
-# #3
     it "responds to member?" do
       expect(user).to respond_to(:member?)
     end
   end
 
   describe "roles" do
-# #4
+
     it "is member by default" do
       expect(user.role).to eql("member")
     end
 
-# #5
     context "member user" do
       it "returns true for #member?" do
         expect(user.member?).to be_truthy
@@ -59,7 +57,6 @@ RSpec.describe User, type: :model do
       end
     end
 
-# #6
     context "admin user" do
       before do
         user.admin!
@@ -86,6 +83,24 @@ RSpec.describe User, type: :model do
      it "should be an invalid user due to blank email" do
        expect(user_with_invalid_email).to_not be_valid
      end
-
    end
+
+   describe "#favorite_for(post)" do
+      before do
+        topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
+        @post = topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+      end
+
+      it "returns `nil` if the user has not favorited the post" do
+  # #1
+        expect(user.favorite_for(@post)).to be_nil
+      end
+
+      it "returns the appropriate favorite if it exists" do
+  # #2
+        favorite = user.favorites.where(post: @post).create
+  # #3
+        expect(user.favorite_for(@post)).to eq(favorite)
+      end
+    end
  end

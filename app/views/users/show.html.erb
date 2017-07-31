@@ -13,12 +13,25 @@
          <small>
            <%= pluralize(@user.posts.count, 'post') %>,
            <%= pluralize(@user.comments.count, 'comment') %>
+           <%= pluralize(@user.favorites.count, 'favorite') %>
          </small>
        </div>
      </div>
    </div>
  </div>
-
+ <div class="row">
+   <div class="col-md-8">
+     <div class="well">
+       <%= user_performed_action?(@user.posts, "post") %>
+     </div>
+     <div class="well">
+       <%= user_performed_action?(@user.comments, "comment") %>
+     </div>
+     <div class="well">
+       <%= user_performed_action?(@user.favorites, "favorite") %>
+     </div>
+   </div>
+ </div>
  <h2>Posts</h2>
  <%= render @user.posts %>
 

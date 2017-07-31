@@ -1,0 +1,19 @@
+<% post = Post.find(favorite["post_id"]) %>
+<div class="media">
+  <%= render partial: 'votes/voter', locals: { post: post } %>
+  <div class="media-body">
+    <% avatar_url = post.user.avatar_url(43) %>
+    <% if avatar_url %>
+      <div class="media-right pull-right">
+        <%= image_tag avatar_url, class: 'media-object' %>
+      </div>
+    <% end %>
+    <h4 class="media-heading">
+      <%= link_to post.title, topic_post_path(post.topic, post) %>
+    </h4>
+    <small>
+      submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
+      <%= post.comments.count %> Comments
+    </small>
+  </div>
+</div>
